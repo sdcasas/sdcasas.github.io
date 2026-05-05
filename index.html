@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,8 +27,24 @@
       --muted2:   #6b6b6b;
       --off:      #c8c8c8;
       --white:    #f5f5f5;
+      --nav-bg:   rgba(15,15,15,0.96);
+      --scanline: rgba(0,0,0,0.055);
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Space Grotesk', sans-serif;
+    }
+
+    [data-theme="light"] {
+      --dark:      #f3f6fb;
+      --dark2:     #ffffff;
+      --dark3:     #edf2fa;
+      --dark4:     #d8e0ec;
+      --muted:     #667085;
+      --muted2:    #344054;
+      --off:       #101828;
+      --white:     #0b1220;
+      --indigo-l:  #4338ca;
+      --nav-bg:    rgba(255,255,255,0.92);
+      --scanline:  rgba(0,0,0,0.015);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,7 +66,7 @@
       background: repeating-linear-gradient(
         0deg,
         transparent, transparent 2px,
-        rgba(0,0,0,0.055) 2px, rgba(0,0,0,0.055) 4px
+        var(--scanline) 2px, var(--scanline) 4px
       );
       pointer-events: none;
       z-index: 9999;
@@ -62,7 +78,7 @@
     nav {
       position: sticky;
       top: 0;
-      background: rgba(15,15,15,0.96);
+      background: var(--nav-bg);
       border-bottom: 1px solid var(--dark4);
       padding: 0 48px;
       display: flex;
@@ -99,6 +115,24 @@
       transition: color 0.2s;
     }
     nav a:not(.nav-logo):hover { color: var(--orange); }
+    .theme-toggle {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--off);
+      border: 1px solid var(--dark4);
+      background: transparent;
+      border-radius: 2px;
+      min-height: 36px;
+      padding: 0 12px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .theme-toggle:hover {
+      color: var(--orange);
+      border-color: var(--orange);
+    }
 
     /* ══════════════════════════════════
        HERO
@@ -155,7 +189,7 @@
       font-weight: 700;
       line-height: 1;
       letter-spacing: -3px;
-      color: var(--white);
+      color: #ffffff;
       margin-bottom: 4px;
     }
     h1.hero-title .accent { color: var(--red); }
@@ -492,34 +526,35 @@
 
 <!-- ═══ NAVBAR ═══ -->
 <nav>
-  <a href="#hero" class="nav-logo" aria-label="sdcasas.dev — inicio">
-    <img src="assets/logo-unico-buho.png" alt="">
+  <a href="#hero" class="nav-logo" aria-label="sdcasas.dev - home">
+    <img src="img/logo-unico-buho.png" alt="">
     <span class="nav-brand">sdcasas<span>.dev</span></span>
   </a>
   <a href="#about">about</a>
   <a href="#skills">skills</a>
   <a href="#projects">projects</a>
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to light theme">light</button>
 </nav>
 
 <!-- ═══ HERO ═══ -->
 <div id="hero" role="banner">
   <div class="hero-left">
-    <div class="hero-eyebrow">OPEN TO NEW PROJECTS · ARGENTINA 🇦🇷</div>
+    <div class="hero-eyebrow">Open To New Projects · Hello World! 🇦🇷</div>
     <div class="hero-prompt" aria-hidden="true">$_</div>
     <h1 class="hero-title">
       <span class="accent">sdcasas</span><span class="tld">.dev</span><span class="hero-cursor" aria-hidden="true"></span>
     </h1>
     <p class="hero-role">backend · cloud · ai engineer</p>
     <p class="hero-bio">
-      Desarrollador Python backend especializado en arquitecturas de nube, sistemas distribuidos y modelos de lenguaje aplicados a producción. Construyo APIs, pipelines e infraestructura que escala.
+      Python backend developer specialized in cloud architecture, distributed systems, and production-ready language model solutions. I build APIs, pipelines, and infrastructure that scale.
     </p>
     <div class="hero-ctas">
       <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
-         class="btn-primary" aria-label="Ver perfil en GitHub">GitHub</a>
+         class="btn-outline" aria-label="View GitHub profile">GitHub</a>
       <a href="https://www.linkedin.com/in/sdcasas" target="_blank" rel="noopener noreferrer"
-         class="btn-outline" aria-label="Ver perfil en LinkedIn">LinkedIn</a>
+         class="btn-outline" aria-label="View LinkedIn profile">LinkedIn</a>
     </div>
-    <div class="hero-tags" role="list" aria-label="Stack principal">
+    <div class="hero-tags" role="list" aria-label="Main stack">
       <span class="hero-tag" role="listitem">PYTHON</span>
       <span class="hero-tag" role="listitem">GO</span>
       <span class="hero-tag" role="listitem">AWS</span>
@@ -531,7 +566,7 @@
     </div>
   </div>
   <div class="hero-right" aria-hidden="true">
-    <img src="assets/logo-unico-buho.png" alt="sdcasas.dev mascot" class="hero-owl">
+    <img src="img/logo-unico-buho.png" alt="Owl logo" class="hero-owl">
   </div>
 </div>
 
@@ -540,13 +575,13 @@
 <!-- ═══ ABOUT ═══ -->
 <section id="about">
   <div class="eyebrow">01 — ABOUT</div>
-  <h2 class="section-title">Quién soy</h2>
+  <h2 class="section-title">About me</h2>
   <div class="about-grid">
 
     <div class="about-card">
       <div class="card-label">BIO</div>
-      <p>Sergio Daniel Casas — ingeniero de software con más de 6 años construyendo aplicaciones web de alta disponibilidad, automatizaciones de infraestructura y soluciones basadas en inteligencia artificial.</p>
-      <p>Me especializo en la intersección entre LLMs, RAG y arquitecturas de producción robustas. Creo en los sistemas bien diseñados, la observabilidad y la documentación honesta. El código habla por sí mismo.</p>
+      <p>Sergio Daniel Casas — software engineer with 6+ years of experience building highly available web applications, infrastructure automation, and AI-powered solutions.</p>
+      <p>I focus on the intersection of LLMs, RAG, and resilient production architectures. I value well-designed systems, observability, and honest documentation. Code should speak for itself.</p>
       <p style="margin-top:24px;font-family:var(--mono);font-size:11px;color:var(--muted2);line-height:2.2;opacity:.45">
         # python · go · aws · gcp<br>
         # llm · rag · agents · embeddings<br>
@@ -557,7 +592,7 @@
     <div class="about-card">
       <div class="card-label">INFO</div>
       <div class="info-row">
-        <span class="info-key">nombre</span>
+        <span class="info-key">name</span>
         <span class="info-val">Sergio Daniel Casas</span>
       </div>
       <div class="info-row">
@@ -565,10 +600,10 @@
         <span class="info-val"><a href="mailto:sdcasas@gmail.com">sdcasas@gmail.com</a></span>
       </div>
       <div class="info-row">
-        <span class="info-key">ubicación</span>
-        <span class="info-val">Catamarca · Córdoba · Bs. As. — ARG</span>
+        <span class="info-key">location</span>
+        <span class="info-val">Catamarca · Cordoba · Buenos Aires — Argentina.</span>
       </div>
-      <ul class="social-list" aria-label="Redes sociales">
+      <ul class="social-list" aria-label="Social links">
         <li class="social-item">
           <a href="https://sdcasas.github.io" target="_blank" rel="noopener noreferrer">
             <span class="social-key">WEBSITE</span>
@@ -610,11 +645,11 @@
 <!-- ═══ SKILLS ═══ -->
 <section id="skills">
   <div class="eyebrow">02 — SKILLS</div>
-  <h2 class="section-title">Stack técnico</h2>
+  <h2 class="section-title">Technical stack</h2>
   <div class="skills-grid">
 
     <div class="skill-cat">
-      <div class="skill-cat-label">LENGUAJES</div>
+      <div class="skill-cat-label">LANGUAGES</div>
       <div class="badges">
         <span class="badge br">Python</span>
         <span class="badge br">Go</span>
@@ -661,7 +696,7 @@
     </div>
 
     <div class="skill-cat">
-      <div class="skill-cat-label">BASES DE DATOS</div>
+      <div class="skill-cat-label">DATABASES</div>
       <div class="badges">
         <span class="badge bd">PostgreSQL</span>
         <span class="badge bd">MySQL</span>
@@ -691,84 +726,62 @@
 <!-- ═══ PROJECTS ═══ -->
 <section id="projects">
   <div class="eyebrow">03 — PROJECTS</div>
-  <h2 class="section-title">Proyectos destacados</h2>
+  <h2 class="section-title">Featured projects</h2>
   <div class="projects-grid">
 
     <article class="project-card">
       <div class="project-name">RAG Pipeline — Production LLM</div>
-      <p class="project-desc">Pipeline de Retrieval-Augmented Generation sobre documentos internos usando embeddings ada-002, PostgreSQL + pgvector y orquestación LangChain. Reducción del 40 % en tiempo de búsqueda.</p>
+      <p class="project-desc">Retrieval-Augmented Generation pipeline over internal documents using ada-002 embeddings, PostgreSQL + pgvector, and LangChain orchestration. Reduced search time by 40%.</p>
       <div class="project-stack">
         <span class="badge bi">Python</span>
         <span class="badge bd">LangChain</span>
         <span class="badge bd">PostgreSQL</span>
         <span class="badge bo">AWS</span>
       </div>
-      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
-         class="project-link" aria-label="Ver RAG Pipeline en GitHub">View on GitHub</a>
     </article>
 
     <article class="project-card">
       <div class="project-name">API Gateway — Microservices</div>
-      <p class="project-desc">Gateway con autenticación JWT, rate limiting, observabilidad con Prometheus y routing dinámico. Desplegado en Kubernetes (GKE) con zero-downtime deployments.</p>
+      <p class="project-desc">Gateway with JWT authentication, rate limiting, Prometheus observability, and dynamic routing. Deployed on Kubernetes (GKE) with zero-downtime rollouts.</p>
       <div class="project-stack">
         <span class="badge br">Go</span>
         <span class="badge bd">Docker</span>
         <span class="badge bd">K8s</span>
         <span class="badge bo">GCP</span>
       </div>
-      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
-         class="project-link" aria-label="Ver API Gateway en GitHub">View on GitHub</a>
     </article>
 
     <article class="project-card">
       <div class="project-name">Django SaaS Boilerplate</div>
-      <p class="project-desc">Template de SaaS con Django + Celery + Redis, autenticación multi-tenant, billing con Stripe y despliegue automatizado vía GitHub Actions hacia AWS ECS.</p>
+      <p class="project-desc">SaaS template with Django + Celery + Redis, multi-tenant authentication, Stripe billing, and automated deployment from GitHub Actions to AWS ECS.</p>
       <div class="project-stack">
         <span class="badge br">Python</span>
         <span class="badge bo">Django</span>
         <span class="badge bd">Redis</span>
         <span class="badge bo">AWS</span>
       </div>
-      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
-         class="project-link" aria-label="Ver Django SaaS en GitHub">View on GitHub</a>
     </article>
 
     <article class="project-card">
       <div class="project-name">Infrastructure as Code — Multi-cloud</div>
-      <p class="project-desc">Módulos de Terraform para entornos replicables en AWS y GCP: VPC, EKS/GKE, RDS, S3, monitoring stack. Reducción del 70 % en tiempo de setup de nuevos entornos.</p>
+      <p class="project-desc">Terraform modules for reproducible environments on AWS and GCP: VPC, EKS/GKE, RDS, S3, and monitoring stack. Reduced new environment setup time by 70%.</p>
       <div class="project-stack">
         <span class="badge bd">Terraform</span>
         <span class="badge bo">AWS</span>
         <span class="badge bo">GCP</span>
         <span class="badge bd">Linux</span>
       </div>
-      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
-         class="project-link" aria-label="Ver IaC en GitHub">View on GitHub</a>
     </article>
 
     <article class="project-card">
       <div class="project-name">FastAPI Async Task System</div>
-      <p class="project-desc">Sistema de procesamiento asíncrono con FastAPI, Celery y Redis. Monitoreo en tiempo real, retry automático y dead-letter queues. Hasta 10k tareas/min.</p>
+      <p class="project-desc">Asynchronous processing system with FastAPI, Celery, and Redis. Real-time monitoring, automatic retries, and dead-letter queues. Up to 10k tasks/min.</p>
       <div class="project-stack">
         <span class="badge br">Python</span>
         <span class="badge bo">FastAPI</span>
         <span class="badge bd">Celery</span>
         <span class="badge bd">Redis</span>
       </div>
-      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
-         class="project-link" aria-label="Ver FastAPI Task System en GitHub">View on GitHub</a>
-    </article>
-
-    <article class="project-card">
-      <div class="project-name">sdcasas.dev — Este sitio</div>
-      <p class="project-desc">Portfolio personal construido con HTML puro y CSS custom properties — cero frameworks, cero dependencias. Hospedado en GitHub Pages con dominio personalizado.</p>
-      <div class="project-stack">
-        <span class="badge bd">HTML</span>
-        <span class="badge bd">CSS</span>
-        <span class="badge bd">GitHub Pages</span>
-      </div>
-      <a href="https://github.com/sdcasas/sdcasas.github.io" target="_blank" rel="noopener noreferrer"
-         class="project-link" aria-label="Ver código fuente en GitHub">View on GitHub</a>
     </article>
 
   </div>
@@ -777,11 +790,38 @@
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-left">
-    <img src="assets/logo-unico-buho.png" alt="sdcasas.dev" class="footer-logo">
+    <!--img src="img/logo-unico-buho.png" alt="sdcasas.dev" class="footer-logo"-->
     <span class="footer-brand">sdcasas<span>.dev</span></span>
   </div>
-  <span class="footer-meta">© 2025 SERGIO DANIEL CASAS · ARGENTINA</span>
+  <span class="footer-meta">© 2026 SERGIO CASAS · CATAMARCA · ARGENTINA</span>
 </footer>
+
+<script>
+  (function () {
+    var storageKey = 'sdcasas-theme';
+    var root = document.documentElement;
+    var toggle = document.getElementById('theme-toggle');
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      toggle.textContent = theme === 'light' ? 'dark' : 'light';
+      toggle.setAttribute(
+        'aria-label',
+        theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'
+      );
+    }
+
+    var savedTheme = localStorage.getItem(storageKey);
+    var initialTheme = savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : 'dark';
+    applyTheme(initialTheme);
+
+    toggle.addEventListener('click', function () {
+      var nextTheme = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(nextTheme);
+      localStorage.setItem(storageKey, nextTheme);
+    });
+  })();
+</script>
 
 </body>
 </html>
