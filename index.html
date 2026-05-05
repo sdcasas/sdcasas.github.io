@@ -1,279 +1,788 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <title>Sergio Casas dev</title>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-    <meta name="title" content="Profile developer">
-    <meta name="description" content="Sergio Casas, python backend developer">
-    <link href="#" rel="stylesheet">
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sdcasas.dev — Sergio Casas · Backend · Cloud · AI</title>
+  <meta name="description" content="Sergio Daniel Casas — Python backend developer, cloud architect and AI engineer based in Argentina.">
+  <meta name="author" content="Sergio Daniel Casas">
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ══════════════════════════════════
+       DESIGN TOKENS — sdcasas brand v1
+    ══════════════════════════════════ */
+    :root {
+      --red:      #e03a2f;
+      --orange:   #f97316;
+      --indigo:   #6366f1;
+      --indigo-l: #a5b4fc;
+      --dark:     #0f0f0f;
+      --dark2:    #161616;
+      --dark3:    #1e1e1e;
+      --dark4:    #2a2a2a;
+      --muted:    #4a4a4a;
+      --muted2:   #6b6b6b;
+      --off:      #c8c8c8;
+      --white:    #f5f5f5;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Space Grotesk', sans-serif;
+    }
 
-    </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
+    body {
+      background: var(--dark);
+      color: var(--white);
+      font-family: var(--mono);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* CRT scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent, transparent 2px,
+        rgba(0,0,0,0.055) 2px, rgba(0,0,0,0.055) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ══════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════ */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(15,15,15,0.96);
+      border-bottom: 1px solid var(--dark4);
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      height: 52px;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      gap: 32px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: auto;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 30px; width: auto; object-fit: contain; }
+    .nav-brand {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: -0.5px;
+    }
+    .nav-brand span { color: var(--orange); }
+    nav a:not(.nav-logo) {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted2);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:not(.nav-logo):hover { color: var(--orange); }
+
+    /* ══════════════════════════════════
+       HERO
+    ══════════════════════════════════ */
+    #hero {
+      min-height: calc(100vh - 52px);
+      display: flex;
+      align-items: center;
+      padding: 80px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 80px;
+    }
+    .hero-left { flex: 1; min-width: 0; }
+    .hero-right { flex: 0 0 auto; display: flex; align-items: center; }
+    .hero-owl {
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--dark4);
+      filter: drop-shadow(0 0 48px rgba(99,102,241,0.2));
+      transition: filter 0.4s ease;
+    }
+    .hero-owl:hover { filter: drop-shadow(0 0 64px rgba(224,58,47,0.3)); }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--muted2);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+    .hero-prompt {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--orange);
+      margin-bottom: 6px;
+      opacity: 0.75;
+    }
+    h1.hero-title {
+      font-family: var(--mono);
+      font-size: clamp(42px, 6vw, 68px);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -3px;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    h1.hero-title .accent { color: var(--red); }
+    h1.hero-title .tld    { color: var(--orange); }
+    .hero-cursor {
+      display: inline-block;
+      width: 10px;
+      height: 0.85em;
+      background: var(--red);
+      opacity: 0.85;
+      border-radius: 1px;
+      vertical-align: text-bottom;
+      animation: blink 1.1s step-start infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink { 0%,100%{opacity:.85} 50%{opacity:0} }
+
+    .hero-role {
+      font-family: var(--mono);
+      font-size: 18px;
+      color: var(--muted2);
+      letter-spacing: -0.5px;
+      margin: 18px 0 20px;
+    }
+    .hero-bio {
+      font-family: var(--sans);
+      font-size: 16px;
+      color: var(--off);
+      line-height: 1.8;
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 13px 26px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s;
+      min-height: 44px;
+    }
+    .btn-primary:hover { background: #c9342a; transform: translateY(-1px); }
+    .btn-outline {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 13px 26px;
+      background: transparent;
+      color: var(--off);
+      border: 1px solid var(--dark4);
+      cursor: pointer;
+      text-decoration: none;
+      border-radius: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      min-height: 44px;
+    }
+    .btn-outline:hover { border-color: var(--indigo); color: var(--indigo-l); transform: translateY(-1px); }
+
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      border: 1px solid var(--dark4);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    /* ══════════════════════════════════
+       SHARED SECTION STYLES
+    ══════════════════════════════════ */
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--dark4);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    section {
+      padding: 96px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--red);
+      font-weight: 500;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: var(--mono);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      color: var(--white);
+      margin-bottom: 48px;
+    }
+
+    /* ══════════════════════════════════
+       ABOUT
+    ══════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .about-card { background: var(--dark2); padding: 36px; }
+    .card-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--muted2);
+      margin-bottom: 20px;
+    }
+    .about-card p {
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--off);
+      line-height: 1.8;
+    }
+    .about-card p + p { margin-top: 16px; }
+
+    .info-row {
+      display: flex;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--dark4);
+      align-items: baseline;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-key {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted2);
+      width: 80px;
+      flex-shrink: 0;
+    }
+    .info-val {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--off);
+      word-break: break-all;
+    }
+    .info-val a { color: var(--indigo-l); text-decoration: none; }
+    .info-val a:hover { color: var(--orange); }
+
+    .social-list { margin-top: 24px; list-style: none; }
+    .social-item a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--dark4);
+      text-decoration: none;
+      transition: padding-left 0.2s;
+    }
+    .social-item:last-child a { border-bottom: none; }
+    .social-item a:hover { padding-left: 6px; }
+    .social-key { font-size: 10px; letter-spacing: 2px; color: var(--muted2); }
+    .social-val {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--off);
+      transition: color 0.2s;
+    }
+    .social-item a:hover .social-val { color: var(--orange); }
+
+    /* ══════════════════════════════════
+       SKILLS
+    ══════════════════════════════════ */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .skill-cat { background: var(--dark2); padding: 28px 28px 32px; }
+    .skill-cat-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--red);
+      margin-bottom: 18px;
+    }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.8px;
+      padding: 5px 11px;
+      border-radius: 2px;
+      display: inline-block;
+      line-height: 1.4;
+    }
+    .bd { background: var(--dark3); color: var(--off); border: 1px solid var(--dark4); }
+    .bi { background: rgba(99,102,241,.12); color: var(--indigo-l); border: 1px solid rgba(99,102,241,.25); }
+    .br { background: rgba(224,58,47,.1); color: #f87171; border: 1px solid rgba(224,58,47,.2); }
+    .bo { background: rgba(249,115,22,.1); color: #fb923c; border: 1px solid rgba(249,115,22,.2); }
+
+    /* ══════════════════════════════════
+       PROJECTS
+    ══════════════════════════════════ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    .project-card {
+      background: var(--dark2);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-left: 2px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .project-card:hover { background: var(--dark3); border-left-color: var(--red); }
+    .project-name {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+    .project-desc {
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--muted2);
+      line-height: 1.75;
+      flex: 1;
+    }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .project-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--red);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s, color 0.2s;
+      min-height: 44px;
+      align-self: flex-start;
+      padding: 6px 0;
+    }
+    .project-link::after { content: '→'; }
+    .project-link:hover { gap: 10px; color: var(--orange); }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--dark4);
+      padding: 36px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-left { display: flex; align-items: center; gap: 12px; }
+    .footer-logo { height: 26px; width: auto; object-fit: contain; opacity: 0.75; }
+    .footer-brand {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--red);
+      font-weight: 700;
+    }
+    .footer-brand span { color: var(--orange); }
+    .footer-meta { font-size: 10px; letter-spacing: 2px; color: var(--muted); }
+
+    /* ══════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════ */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; gap: 20px; }
+      #hero {
+        flex-direction: column-reverse;
+        padding: 48px 24px 64px;
+        min-height: auto;
+        gap: 40px;
+      }
+      .hero-owl { width: 160px; height: 160px; }
+      section { padding: 64px 24px; }
+      .about-grid,
+      .skills-grid,
+      .projects-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 16px; padding: 32px 24px; text-align: center; }
+      .footer-left { justify-content: center; }
+    }
+    @media (max-width: 600px) {
+      nav a:not(.nav-logo) { font-size: 10px; }
+      .nav-brand { display: none; }
+      h1.hero-title { letter-spacing: -2px; }
+      .hero-bio { font-size: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-cursor { animation: none; }
+      html { scroll-behavior: auto; }
+      .hero-owl, .project-card, .btn-primary, .btn-outline, .project-link, .social-item a { transition: none; }
+    }
+  </style>
 </head>
-
 <body>
-    <!--
-    <header>
-        <h1>Title Page</h1>
-    </header>
-    -->
-    <!-- Breadcrumb -->
-    <!-- 
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-        <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-      </ol>
-    </nav>
-    -->
-    <!-- /Breadcrumb -->
 
-    <br><br><br>
-    <div class="container fluid">
+<!-- ═══ NAVBAR ═══ -->
+<nav>
+  <a href="#hero" class="nav-logo" aria-label="sdcasas.dev — inicio">
+    <img src="assets/logo-unico-buho.png" alt="">
+    <span class="nav-brand">sdcasas<span>.dev</span></span>
+  </a>
+  <a href="#about">about</a>
+  <a href="#skills">skills</a>
+  <a href="#projects">projects</a>
+</nav>
 
-        <div class="row">
-            <div class="col-sm-4">
+<!-- ═══ HERO ═══ -->
+<div id="hero" role="banner">
+  <div class="hero-left">
+    <div class="hero-eyebrow">OPEN TO NEW PROJECTS · ARGENTINA 🇦🇷</div>
+    <div class="hero-prompt" aria-hidden="true">$_</div>
+    <h1 class="hero-title">
+      <span class="accent">sdcasas</span><span class="tld">.dev</span><span class="hero-cursor" aria-hidden="true"></span>
+    </h1>
+    <p class="hero-role">backend · cloud · ai engineer</p>
+    <p class="hero-bio">
+      Desarrollador Python backend especializado en arquitecturas de nube, sistemas distribuidos y modelos de lenguaje aplicados a producción. Construyo APIs, pipelines e infraestructura que escala.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
+         class="btn-primary" aria-label="Ver perfil en GitHub">GitHub</a>
+      <a href="https://www.linkedin.com/in/sdcasas" target="_blank" rel="noopener noreferrer"
+         class="btn-outline" aria-label="Ver perfil en LinkedIn">LinkedIn</a>
+    </div>
+    <div class="hero-tags" role="list" aria-label="Stack principal">
+      <span class="hero-tag" role="listitem">PYTHON</span>
+      <span class="hero-tag" role="listitem">GO</span>
+      <span class="hero-tag" role="listitem">AWS</span>
+      <span class="hero-tag" role="listitem">GCP</span>
+      <span class="hero-tag" role="listitem">DOCKER</span>
+      <span class="hero-tag" role="listitem">K8S</span>
+      <span class="hero-tag" role="listitem">LLM</span>
+      <span class="hero-tag" role="listitem">RAG</span>
+    </div>
+  </div>
+  <div class="hero-right" aria-hidden="true">
+    <img src="assets/logo-unico-buho.png" alt="sdcasas.dev mascot" class="hero-owl">
+  </div>
+</div>
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex flex-column align-items-center text-center">
-                            <img src="img/sdc.png" alt="Admin" class="rounded-circle" width="150">
-                            <div class="mt-3">
-                                <h4>sdcasas</h4>
-                                <p class="text-secondary mb-1">Python Backend Developer | Sysadmin</p>
-                                <!--
-                  <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                  <button class="btn btn-primary">Follow</button>
-                  <button class="btn btn-outline-primary">Message</button>
-                  -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<hr class="divider">
 
-                <div class="card mt-3">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-globe mr-2 icon-inline">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                    <path
-                                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                                    </path>
-                                </svg>Website</h6>
-                            <a href="https://sdcasas.github.io" target="_blank">
-                                <span class="text-secondary">https://sdcasas.github.io</span>
-                            </a>
-                        </li>
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="eyebrow">01 — ABOUT</div>
+  <h2 class="section-title">Quién soy</h2>
+  <div class="about-grid">
 
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-globe mr-2 icon-inline">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                    <path
-                                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                                    </path>
-                                </svg>Linkedin</h6>
-                            <a href="https://www.linkedin.com/in/sdcasas/" target="_blank">
-                                <span class="text-secondary">linkedin.com/in/sdcasas</span>
-                            </a>
-                        </li>
-
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-github mr-2 icon-inline">
-                                    <path
-                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                                    </path>
-                                </svg>Github</h6>
-                            <a href="https://github.com/sdcasas" target="_blank">
-                                <span class="text-secondary">sdcasas</span>
-                            </a>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-twitter mr-2 icon-inline text-info">
-                                    <path
-                                        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                                    </path>
-                                </svg>Twitter</h6>
-                            <a href="https://twitter.com/sdcasas_" target="_blank">
-                                <span class="text-secondary">@sdcasas_</span>
-                            </a>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-instagram mr-2 icon-inline text-danger">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                </svg>Instagram</h6>
-                            <a href="https://www.instagram.com/sdcasas/" target="_blank">
-                                <span class="text-secondary">@sdcasas</span>
-                            </a>
-                        </li>
-                        <!--
-              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
-                <span class="text-secondary">bootdey</span>
-              </li>
-              -->
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-8">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <h6 class="mb-0">Full Name</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                Sergio Daniel Casas
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-2 text-right">
-                                <h6 class="mb-0">Email</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                sdcasas@gmail.com
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <h6 class="mb-0">Phone</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                +5493834229159
-                            </div>
-                        </div>
-                        <hr>
-                        <!--
-              <div class="row">
-                <div class="col-sm-2">
-                  <h6 class="mb-0">Mobile</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  (320) 380-4539
-                </div>
-              </div>
-              <hr>
-              -->
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <h6 class="mb-0">Address</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                Catamarca | Cordoba | Buenos Aires - Argentina
-                            </div>
-                        </div>
-                        <hr>
-                        <!--
-              <div class="row">
-                <div class="col-sm-12">
-                  <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                </div>
-              </div>
-              -->
-                    </div>
-                </div>
-
-                <!--
-          <div class="row gutters-sm">
-            <div class="col-sm-6 mb-3">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                  <small>Web Design</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <small>Website Markup</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <small>One Page</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <small>Mobile Template</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <small>Backend API</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 mb-3">
-              <div class="card h-100">
-                <div class="card-body">
-                  <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                  <small>Web Design</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <small>Website Markup</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <small>One Page</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <small>Mobile Template</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <small>Backend API</small>
-                  <div class="progress mb-3" style="height: 5px">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          -->
-
-            </div>
-        </div>
-
+    <div class="about-card">
+      <div class="card-label">BIO</div>
+      <p>Sergio Daniel Casas — ingeniero de software con más de 6 años construyendo aplicaciones web de alta disponibilidad, automatizaciones de infraestructura y soluciones basadas en inteligencia artificial.</p>
+      <p>Me especializo en la intersección entre LLMs, RAG y arquitecturas de producción robustas. Creo en los sistemas bien diseñados, la observabilidad y la documentación honesta. El código habla por sí mismo.</p>
+      <p style="margin-top:24px;font-family:var(--mono);font-size:11px;color:var(--muted2);line-height:2.2;opacity:.45">
+        # python · go · aws · gcp<br>
+        # llm · rag · agents · embeddings<br>
+        # docker · k8s · terraform · linux
+      </p>
     </div>
 
-    <!--
-    <footer>
-        <h4>Redes sociales</h4>
-        <a href="#">Facebook</a>
-        <a href="#">Tiwtter</a>
-    </footer>
-    -->
-</body>
+    <div class="about-card">
+      <div class="card-label">INFO</div>
+      <div class="info-row">
+        <span class="info-key">nombre</span>
+        <span class="info-val">Sergio Daniel Casas</span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">email</span>
+        <span class="info-val"><a href="mailto:sdcasas@gmail.com">sdcasas@gmail.com</a></span>
+      </div>
+      <div class="info-row">
+        <span class="info-key">ubicación</span>
+        <span class="info-val">Catamarca · Córdoba · Bs. As. — ARG</span>
+      </div>
+      <ul class="social-list" aria-label="Redes sociales">
+        <li class="social-item">
+          <a href="https://sdcasas.github.io" target="_blank" rel="noopener noreferrer">
+            <span class="social-key">WEBSITE</span>
+            <span class="social-val">https://sdcasas.github.io</span>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.linkedin.com/in/sdcasas/" target="_blank" rel="noopener noreferrer">
+            <span class="social-key">LINKEDIN</span>
+            <span class="social-val">linkedin.com/in/sdcasas</span>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer">
+            <span class="social-key">GITHUB</span>
+            <span class="social-val">github.com/sdcasas</span>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://twitter.com/sdcasas_" target="_blank" rel="noopener noreferrer">
+            <span class="social-key">TWITTER</span>
+            <span class="social-val">@sdcasas_</span>
+          </a>
+        </li>
+        <li class="social-item">
+          <a href="https://www.instagram.com/sdcasas/" target="_blank" rel="noopener noreferrer">
+            <span class="social-key">INSTAGRAM</span>
+            <span class="social-val">@sdcasas</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <div class="eyebrow">02 — SKILLS</div>
+  <h2 class="section-title">Stack técnico</h2>
+  <div class="skills-grid">
+
+    <div class="skill-cat">
+      <div class="skill-cat-label">LENGUAJES</div>
+      <div class="badges">
+        <span class="badge br">Python</span>
+        <span class="badge br">Go</span>
+        <span class="badge bd">Bash / Shell</span>
+        <span class="badge bd">SQL</span>
+        <span class="badge bd">JavaScript</span>
+      </div>
+    </div>
+
+    <div class="skill-cat">
+      <div class="skill-cat-label">FRAMEWORKS &amp; LIBS</div>
+      <div class="badges">
+        <span class="badge bo">FastAPI</span>
+        <span class="badge bo">Django</span>
+        <span class="badge bo">Flask</span>
+        <span class="badge bd">SQLAlchemy</span>
+        <span class="badge bd">Celery</span>
+        <span class="badge bd">LangChain</span>
+      </div>
+    </div>
+
+    <div class="skill-cat">
+      <div class="skill-cat-label">AI / ML</div>
+      <div class="badges">
+        <span class="badge bi">LLMs</span>
+        <span class="badge bi">RAG</span>
+        <span class="badge bi">Agents</span>
+        <span class="badge bi">Embeddings</span>
+        <span class="badge bd">OpenAI API</span>
+        <span class="badge bd">Hugging Face</span>
+      </div>
+    </div>
+
+    <div class="skill-cat">
+      <div class="skill-cat-label">CLOUD &amp; INFRA</div>
+      <div class="badges">
+        <span class="badge bo">AWS</span>
+        <span class="badge bo">GCP</span>
+        <span class="badge bd">Docker</span>
+        <span class="badge bd">Kubernetes</span>
+        <span class="badge bd">Terraform</span>
+        <span class="badge bd">Linux</span>
+      </div>
+    </div>
+
+    <div class="skill-cat">
+      <div class="skill-cat-label">BASES DE DATOS</div>
+      <div class="badges">
+        <span class="badge bd">PostgreSQL</span>
+        <span class="badge bd">MySQL</span>
+        <span class="badge bd">Redis</span>
+        <span class="badge bd">MongoDB</span>
+        <span class="badge bd">Elasticsearch</span>
+      </div>
+    </div>
+
+    <div class="skill-cat">
+      <div class="skill-cat-label">DEVOPS &amp; TOOLS</div>
+      <div class="badges">
+        <span class="badge bd">Git</span>
+        <span class="badge bd">CI/CD</span>
+        <span class="badge bd">GitHub Actions</span>
+        <span class="badge bd">Nginx</span>
+        <span class="badge bd">Prometheus</span>
+        <span class="badge bd">Grafana</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <div class="eyebrow">03 — PROJECTS</div>
+  <h2 class="section-title">Proyectos destacados</h2>
+  <div class="projects-grid">
+
+    <article class="project-card">
+      <div class="project-name">RAG Pipeline — Production LLM</div>
+      <p class="project-desc">Pipeline de Retrieval-Augmented Generation sobre documentos internos usando embeddings ada-002, PostgreSQL + pgvector y orquestación LangChain. Reducción del 40 % en tiempo de búsqueda.</p>
+      <div class="project-stack">
+        <span class="badge bi">Python</span>
+        <span class="badge bd">LangChain</span>
+        <span class="badge bd">PostgreSQL</span>
+        <span class="badge bo">AWS</span>
+      </div>
+      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
+         class="project-link" aria-label="Ver RAG Pipeline en GitHub">View on GitHub</a>
+    </article>
+
+    <article class="project-card">
+      <div class="project-name">API Gateway — Microservices</div>
+      <p class="project-desc">Gateway con autenticación JWT, rate limiting, observabilidad con Prometheus y routing dinámico. Desplegado en Kubernetes (GKE) con zero-downtime deployments.</p>
+      <div class="project-stack">
+        <span class="badge br">Go</span>
+        <span class="badge bd">Docker</span>
+        <span class="badge bd">K8s</span>
+        <span class="badge bo">GCP</span>
+      </div>
+      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
+         class="project-link" aria-label="Ver API Gateway en GitHub">View on GitHub</a>
+    </article>
+
+    <article class="project-card">
+      <div class="project-name">Django SaaS Boilerplate</div>
+      <p class="project-desc">Template de SaaS con Django + Celery + Redis, autenticación multi-tenant, billing con Stripe y despliegue automatizado vía GitHub Actions hacia AWS ECS.</p>
+      <div class="project-stack">
+        <span class="badge br">Python</span>
+        <span class="badge bo">Django</span>
+        <span class="badge bd">Redis</span>
+        <span class="badge bo">AWS</span>
+      </div>
+      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
+         class="project-link" aria-label="Ver Django SaaS en GitHub">View on GitHub</a>
+    </article>
+
+    <article class="project-card">
+      <div class="project-name">Infrastructure as Code — Multi-cloud</div>
+      <p class="project-desc">Módulos de Terraform para entornos replicables en AWS y GCP: VPC, EKS/GKE, RDS, S3, monitoring stack. Reducción del 70 % en tiempo de setup de nuevos entornos.</p>
+      <div class="project-stack">
+        <span class="badge bd">Terraform</span>
+        <span class="badge bo">AWS</span>
+        <span class="badge bo">GCP</span>
+        <span class="badge bd">Linux</span>
+      </div>
+      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
+         class="project-link" aria-label="Ver IaC en GitHub">View on GitHub</a>
+    </article>
+
+    <article class="project-card">
+      <div class="project-name">FastAPI Async Task System</div>
+      <p class="project-desc">Sistema de procesamiento asíncrono con FastAPI, Celery y Redis. Monitoreo en tiempo real, retry automático y dead-letter queues. Hasta 10k tareas/min.</p>
+      <div class="project-stack">
+        <span class="badge br">Python</span>
+        <span class="badge bo">FastAPI</span>
+        <span class="badge bd">Celery</span>
+        <span class="badge bd">Redis</span>
+      </div>
+      <a href="https://github.com/sdcasas" target="_blank" rel="noopener noreferrer"
+         class="project-link" aria-label="Ver FastAPI Task System en GitHub">View on GitHub</a>
+    </article>
+
+    <article class="project-card">
+      <div class="project-name">sdcasas.dev — Este sitio</div>
+      <p class="project-desc">Portfolio personal construido con HTML puro y CSS custom properties — cero frameworks, cero dependencias. Hospedado en GitHub Pages con dominio personalizado.</p>
+      <div class="project-stack">
+        <span class="badge bd">HTML</span>
+        <span class="badge bd">CSS</span>
+        <span class="badge bd">GitHub Pages</span>
+      </div>
+      <a href="https://github.com/sdcasas/sdcasas.github.io" target="_blank" rel="noopener noreferrer"
+         class="project-link" aria-label="Ver código fuente en GitHub">View on GitHub</a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-left">
+    <img src="assets/logo-unico-buho.png" alt="sdcasas.dev" class="footer-logo">
+    <span class="footer-brand">sdcasas<span>.dev</span></span>
+  </div>
+  <span class="footer-meta">© 2025 SERGIO DANIEL CASAS · ARGENTINA</span>
+</footer>
+
+</body>
 </html>
+
